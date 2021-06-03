@@ -46,7 +46,7 @@ jobs:
       - name: Check migrations
         run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
-            php yii migrate/redo ${changed_file} --interactive=0
+            php yii migrate/redo ${{ changed_file }} --interactive=0
           done
         env:
           CHECK_MIGRATION: true
