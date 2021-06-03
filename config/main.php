@@ -1,6 +1,8 @@
 <?php
 
 use app\components\FakeDatabaseCommand;
+use app\components\MigrateCommand;
+use yii\console\controllers\MigrateController;
 use yii\db\Connection;
 
 return [
@@ -9,7 +11,11 @@ return [
     'container' => [
         'definitions' => [
             FakeDatabaseCommand::class => [
-                'bigTables' => ['table1'],
+                'bigTables' => preg_split('#\s+#', $_SERVER['BIG_TABLES'] ?? ''),
+            ],
+            MigrateController::class => [
+                'class' => MigrateCommand::class,
+                'changeFiles' => preg_split('#\s+#', $_SERVER['CHANGED_FILES'] ?? ''),
             ],
         ],
     ],
@@ -21,7 +27,6 @@ return [
             'password' => 'qweasdzxc',
             'enableLogging' => true,
             'enableProfiling' => true,
-            'commandClass' => FakeDatabaseCommand::class,
         ],
     ],
 ];

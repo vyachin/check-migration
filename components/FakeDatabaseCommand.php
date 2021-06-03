@@ -22,11 +22,11 @@ class FakeDatabaseCommand extends Command
 
     public function dropTable($table)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::dropTable($table);
     }
 
-    private function createTableName(string $table): void
+    private function checkTableName(string $table): void
     {
         $table = $this->db->quoteTableName($table);
         $table = strtolower($table);
@@ -37,37 +37,37 @@ class FakeDatabaseCommand extends Command
 
     public function createIndex($name, $table, $columns, $unique = false)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::createIndex($name, $table, $columns, $unique);
     }
 
     public function addCheck($name, $table, $expression)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::addCheck($name, $table, $expression);
     }
 
     public function addUnique($name, $table, $columns)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::addUnique($name, $table, $columns);
     }
 
     public function addColumn($table, $column, $type)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::addColumn($table, $column, $type);
     }
 
     public function dropColumn($table, $column)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::dropColumn($table, $column);
     }
 
     public function addForeignKey($name, $table, $columns, $refTable, $refColumns, $delete = null, $update = null)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::addForeignKey(
             $name,
             $table,
@@ -81,7 +81,7 @@ class FakeDatabaseCommand extends Command
 
     public function alterColumn($table, $column, $type)
     {
-        $this->createTableName($table);
+        $this->checkTableName($table);
         return parent::alterColumn($table, $column, $type);
     }
 }

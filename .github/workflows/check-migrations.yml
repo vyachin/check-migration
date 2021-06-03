@@ -1,6 +1,8 @@
 name: Check migrations
 
 on: push
+env:
+  MYSQL_ROOT_PASSWORD: qweasdzxc
 
 jobs:
   tests:
@@ -8,16 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: files
+        uses: vyachin/get-changed-files@v3
+        with:
+          branch: master
+
       - uses: mirromutth/mysql-action@v1.1
         with:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mysql version: '5.6'
           mysql database: test
-          mysql root password: qweasdzxc
-
-      - name: Checkout
-        uses: actions/checkout@v2
+          mysql root password: $MYSQL_ROOT_PASSWORD
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -26,8 +33,17 @@ jobs:
           coverage: xdebug
           tools: composer
 
+      - name: Wait for MySQL
+        run: |
+          while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
+            sleep 1
+          done
+
       - name: Install dependencies with composer
         run: composer install --prefer-dist --no-suggest --no-progress
 
       - name: Check migrations
         run: php yii migrate/up --interactive=0
+        env:
+          CHANGED_FILES: ${{ steps.files.outputs.all }}
+          BIG_TABLES: table2
