@@ -28,10 +28,12 @@ class FakeDatabaseCommand extends Command
 
     private function createTableName(string $table): void
     {
-        $table = $this->db->quoteTableName($table);
-        $table = strtolower($table);
-        if (in_array($table, $this->bigTables, true)) {
-            throw new Exception("Опасная миграция на таблице $table");
+        if ($_ENV['CHECK_MIGRATION'] ?? null) {
+            $table = $this->db->quoteTableName($table);
+            $table = strtolower($table);
+            if (in_array($table, $this->bigTables, true)) {
+                throw new Exception("Опасная миграция на таблице $table");
+            }
         }
     }
 
