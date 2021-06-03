@@ -1,0 +1,26 @@
+{
+  "require": {
+    "php": ">=7.4",
+    "yiisoft/yii2": "^2.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "config": {
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
+    }
+  }
+}

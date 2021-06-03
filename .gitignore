@@ -1,0 +1,77 @@
+# phpstorm project files
+/.idea/
+http-client.env.json
+none
+
+# netbeans project files
+/nbproject/
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor/
+
+# nodejs modules
+/node_modules/
+
+# composer itself is not needed
+composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+_local.php
+_local_test.php
+yii-dev
+
+/build/
+cache.properties
+
+# docker-container's composer cache folder
+/.composer/
+
+/web/index.php
+/web/index.dev.php
+/web/js/script.js
+/dump.sql
+/build.tar.gz
+/commands/TestController.php
+
+yarn-error.log
+package-lock.json
+/web/swagger.json
+
+/web/css/compiled.*
+/web/css/fonts.css
+/web/css/icons.data.png.*
+/web/css/icons.data.svg.*
+/web/css/icons.fallback.*
+/web/icons/
+/web/scss/modules/icons.data.png.scss
+/web/scss/modules/icons.data.svg.scss
+/web/scss/modules/icons.fallback.scss
+
+/web/svg/compressed/
+
+/web/fonts/glyphicons-halflings-regular.*
+/phpcs.xml
+/web/android-chrome*
+/web/apple-touch-icon*
+/web/browserconfig.xml
+/web/favicon*
+/web/html_code.html
+/web/mstile*
+/web/safari-pinned-tab.svg
+/web/site.webmanifest
+/phpcpd.phar
+/psalm.phar
+/phpcs.phar
+/phpcbf.phar
+/.phpunit.result.cache
+/.vagrant/

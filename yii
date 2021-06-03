@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Эти константы менять нельзя, так как это повлияет на работу проекта на боевом сервере.
+ * Если нужен отладочный режим, сделайте свою копию yii и не забудьте исключить его из git
+ */
+defined('YII_DEBUG') or define('YII_DEBUG', false);
+defined('YII_ENV') or define('YII_ENV', 'prod');
+
+// fcgi doesn't have STDIN and STDOUT defined by default
+defined('STDIN') or define('STDIN', fopen('php://stdin', 'rb'));
+defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'wb'));
+
+require(__DIR__ . '/vendor/autoload.php');
+require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');
+
+$config = yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/config/main.php'),
+    require(__DIR__ . '/config/_local.php')
+);
+
+$application = new yii\console\Application($config);
+$exitCode = $application->run();
+exit($exitCode);
