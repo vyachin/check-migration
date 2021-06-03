@@ -15,6 +15,7 @@ return [
             ],
             MigrateController::class => [
                 'class' => MigrateCommand::class,
+                'changeFiles' => preg_split('#\s+#', $_SERVER['CHANGED_FILES'] ?? ''),
             ],
         ],
     ],

@@ -45,5 +45,5 @@ jobs:
       - name: Check migrations
         run: php yii migrate/up --interactive=0
         env:
-          CHANGE_FILES: ${{ steps.files.outputs.all }}
+          CHANGED_FILES: ${{ steps.files.outputs.all }}
           BIG_TABLES: table2

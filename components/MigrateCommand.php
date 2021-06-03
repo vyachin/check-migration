@@ -10,13 +10,7 @@ use yii\db\Command;
 
 class MigrateCommand extends MigrateController
 {
-    private array $changeFiles = [];
-
-    public function init(): void
-    {
-        parent::init();
-        $this->changeFiles = preg_split('#\s+#', $_SERVER['CHANGE_FILES'] ?? '');
-    }
+    public array $changeFiles = [];
 
     protected function createMigration($class)
     {
