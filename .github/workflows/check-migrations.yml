@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v2
 
       - id: files
-        uses: vyachin/get-changed-files@v2
+        uses: vyachin/get-changed-files@v3
+        with:
+          branch: master
 
       - uses: mirromutth/mysql-action@v1.1
         with:
