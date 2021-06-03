@@ -1,6 +1,8 @@
 name: Check migrations
 
 on: push
+env:
+  MYSQL_ROOT_PASSWORD: qweasdzxc
 
 jobs:
   tests:
@@ -14,10 +16,13 @@ jobs:
           collation server: 'utf8_general_ci'
           mysql version: '5.6'
           mysql database: test
-          mysql root password: qweasdzxc
+          mysql root password: $MYSQL_ROOT_PASSWORD
 
       - name: Wait for MySQL
-        run: ping -c 3 mysql
+        run: |
+          while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
+            sleep 1
+          done
 
       - name: Checkout
         uses: actions/checkout@v2
