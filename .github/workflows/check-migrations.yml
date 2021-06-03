@@ -37,17 +37,24 @@ jobs:
             sleep 1
           done
 
-      - name: Install dependencies with composer
-        run: composer install --prefer-dist --no-suggest --no-progress
+      #      - name: Install dependencies with composer
+      #        run: composer install --prefer-dist --no-suggest --no-progress
 
       - name: Apply all migrations
-        run: php yii migrate/up --interactive=0
-
-      - name: Check migrations
-        run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            php yii migrate/redo ${{ changed_file }} --interactive=0
-          done
+        run: php test.php
         env:
-          CHECK_MIGRATION: true
+          FILES: ${{ steps.files.outputs.all }}
 
+#        run: php yii migrate/up --interactive=0
+#      - name: Down migrations
+#        run: |
+#          for changed_file in ${{ steps.files.outputs.all }}; do
+#            php yii migrate/down ${{ changed_file }} --interactive=0
+#          done
+#        env:
+#          CHECK_MIGRATION: true
+#
+#      - name: Check migrations
+#        run: php yii migrate/up --interactive=0
+#        env:
+#          CHECK_MIGRATION: true
