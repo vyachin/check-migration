@@ -17,7 +17,7 @@ require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');
 
 $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/config/main.php'),
-    require(__DIR__ . '/config/_local.php')
+    file_exists(__DIR__ . '/config/_local.php') ? require(__DIR__ . '/config/_local.php') : []
 );
 
 $application = new yii\console\Application($config);
