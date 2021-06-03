@@ -11,7 +11,7 @@ return [
     'container' => [
         'definitions' => [
             FakeDatabaseCommand::class => [
-                'bigTables' => ['table1'],
+                'bigTables' => preg_split('#\s+#', $_SERVER['BIG_TABLES'] ?? ''),
             ],
             MigrateController::class => [
                 'class' => MigrateCommand::class,
