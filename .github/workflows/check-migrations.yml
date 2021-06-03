@@ -18,6 +18,9 @@ jobs:
           mysql database: test
           mysql root password: $MYSQL_ROOT_PASSWORD
 
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+
       - name: Wait for MySQL
         run: |
           while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
@@ -36,6 +39,11 @@ jobs:
 
       - name: Install dependencies with composer
         run: composer install --prefer-dist --no-suggest --no-progress
+
+      - run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
 
       - name: Check migrations
         run: php yii migrate/up --interactive=0
