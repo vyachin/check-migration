@@ -16,6 +16,9 @@ jobs:
           mysql database: test
           mysql root password: qweasdzxc
 
+      - name: Wait for MySQL
+        run: ping -c 3 mysql
+
       - name: Checkout
         uses: actions/checkout@v2
 
