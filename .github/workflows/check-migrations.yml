@@ -40,13 +40,14 @@ jobs:
       - name: Install dependencies with composer
         run: composer install --prefer-dist --no-suggest --no-progress
 
-      - name: Test
-        run: php test.php ${{ steps.files.outputs.all }}
-
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-          done
+      - name: Apply all migrations
+        run: php yii migrate/up --interactive=0
 
       - name: Check migrations
-        run: php yii migrate/up --interactive=0
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            php yii migrate/redo ${changed_file} --interative=0
+          done
+        env:
+          CHECK_MIGRATION: true
+

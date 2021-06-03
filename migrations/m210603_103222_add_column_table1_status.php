@@ -7,6 +7,7 @@ use yii\db\Migration;
  */
 class m210603_103222_add_column_table1_status extends Migration
 {
+
     public function safeUp()
     {
         $this->addColumn('table1', 'status', $this->tinyInteger());
