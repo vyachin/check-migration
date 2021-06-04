@@ -45,7 +45,7 @@ jobs:
       - name: Generate config
         run: |
           cat << EOF > config/main.php
-  <?php
+<?php
 
   use app\components\FakeDatabaseCommand;
   use app\components\MigrateCommand;
@@ -56,28 +56,29 @@ jobs:
   'id' => 'check-migrations',
   'basePath' => dirname(__DIR__),
   'container' => [
-  'definitions' => [
-  FakeDatabaseCommand::class => [
-  'bigTables' => preg_split('#\s+#', \$_SERVER['BIG_TABLES'] ?? ''),
+    'definitions' => [
+      FakeDatabaseCommand::class => [
+        'bigTables' => preg_split('#\s+#', \$_SERVER['BIG_TABLES'] ?? ''),
+      ],
+      MigrateController::class => [
+        'class' => MigrateCommand::class,
+        'changeFiles' => preg_split('#\s+#', \$_SERVER['CHANGED_FILES'] ?? ''),
+      ],
+    ],
   ],
-  MigrateController::class => [
-  'class' => MigrateCommand::class,
-  'changeFiles' => preg_split('#\s+#', \$_SERVER['CHANGED_FILES'] ?? ''),
-  ],
-],
-],
   'components' => [
-  'db' => [
-  'class' => Connection::class,
-  'dsn' => 'mysql:host=127.0.0.1;dbname=test',
-  'username' => 'root',
-  'password' => 'qweasdzxc',
-  'enableLogging' => true,
-  'enableProfiling' => true,
-],
-],
+    'db' => [
+      'class' => Connection::class,
+      'dsn' => 'mysql:host=127.0.0.1;dbname=test',
+      'username' => 'root',
+      'password' => 'qweasdzxc',
+      'enableLogging' => true,
+      'enableProfiling' => true,
+    ],
+  ],
 ];
-  EOF
+
+EOF
 
 - name: Check migrations
   run: php yii migrate/up --interactive=0
