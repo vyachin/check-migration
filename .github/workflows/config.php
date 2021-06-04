@@ -7,7 +7,7 @@ use yii\db\Connection;
 
 return [
     'id' => 'check-migrations',
-    'basePath' => dirname(__DIR__),
+    'basePath' => __DIR__.'/../..',
     'container' => [
         'definitions' => [
             FakeDatabaseCommand::class => [
@@ -22,9 +22,9 @@ return [
     'components' => [
         'db' => [
             'class' => Connection::class,
-            'dsn' => 'mysql:host=127.0.0.1;dbname=test',
+            'dsn' => 'mysql:host=127.0.0.1;dbname='.$_SERVER['MYSQL_DATABASE'],
             'username' => 'root',
-            'password' => 'qweasdzxc',
+            'password' => $_SERVER['MYSQL_ROOT_PASSWORD'],
             'enableLogging' => true,
             'enableProfiling' => true,
         ],
