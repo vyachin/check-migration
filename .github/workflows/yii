@@ -12,12 +12,12 @@ defined('YII_ENV') or define('YII_ENV', 'prod');
 defined('STDIN') or define('STDIN', fopen('php://stdin', 'rb'));
 defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'wb'));
 
-require(__DIR__ . '/vendor/autoload.php');
-require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../../vendor/autoload.php');
+require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
 
 $config = yii\helpers\ArrayHelper::merge(
-    require(__DIR__ . '/config/main.php'),
-    file_exists(__DIR__ . '/config/_local.php') ? require(__DIR__ . '/config/_local.php') : []
+    require(__DIR__ . '/config.php'),
+    file_exists(__DIR__ . '/../../config/_local.php') ? require(__DIR__ . '/../../config/_local.php') : []
 );
 
 $application = new yii\console\Application($config);
