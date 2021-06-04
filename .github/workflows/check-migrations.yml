@@ -44,42 +44,43 @@ jobs:
 
       - name: Generate config
         run: |
-          echo "<?php
+          cat << EOF > config/main.php
+  <?php
 
-                use app\components\FakeDatabaseCommand;
-                use app\components\MigrateCommand;
-                use yii\console\controllers\MigrateController;
-                use yii\db\Connection;
+  use app\components\FakeDatabaseCommand;
+  use app\components\MigrateCommand;
+  use yii\console\controllers\MigrateController;
+  use yii\db\Connection;
 
-                return [
-                    'id' => 'check-migrations',
-                    'basePath' => dirname(__DIR__),
-                    'container' => [
-                        'definitions' => [
-                            FakeDatabaseCommand::class => [
-                                'bigTables' => preg_split('#\s+#', $_SERVER['BIG_TABLES'] ?? ''),
-                            ],
-                            MigrateController::class => [
-                                'class' => MigrateCommand::class,
-                                'changeFiles' => preg_split('#\s+#', $_SERVER['CHANGED_FILES'] ?? ''),
-                            ],
-                        ],
-                    ],
-                    'components' => [
-                        'db' => [
-                            'class' => Connection::class,
-                            'dsn' => 'mysql:host=127.0.0.1;dbname=test',
-                            'username' => 'root',
-                            'password' => 'qweasdzxc',
-                            'enableLogging' => true,
-                            'enableProfiling' => true,
-                        ],
-                    ],
-                ];
-          " > config/main.php
+  return [
+  'id' => 'check-migrations',
+  'basePath' => dirname(__DIR__),
+  'container' => [
+  'definitions' => [
+  FakeDatabaseCommand::class => [
+  'bigTables' => preg_split('#\s+#', \$_SERVER['BIG_TABLES'] ?? ''),
+  ],
+  MigrateController::class => [
+  'class' => MigrateCommand::class,
+  'changeFiles' => preg_split('#\s+#', \$_SERVER['CHANGED_FILES'] ?? ''),
+  ],
+],
+],
+  'components' => [
+  'db' => [
+  'class' => Connection::class,
+  'dsn' => 'mysql:host=127.0.0.1;dbname=test',
+  'username' => 'root',
+  'password' => 'qweasdzxc',
+  'enableLogging' => true,
+  'enableProfiling' => true,
+],
+],
+];
+  EOF
 
-      - name: Check migrations
-        run: php yii migrate/up --interactive=0
-        env:
-          CHANGED_FILES: ${{ steps.files.outputs.all }}
-          BIG_TABLES: table1
+- name: Check migrations
+  run: php yii migrate/up --interactive=0
+  env:
+    CHANGED_FILES: ${{ steps.files.outputs.all }}
+    BIG_TABLES: table1
